@@ -131,7 +131,7 @@ func GetTotalReplicas(replicas map[apiv1.ReplicaType]*apiv1.ReplicaSpec) int32 {
 	return jobReplicas
 }
 
-func GetTotalFailedReplicas(replicas map[apiv1.ReplicaType]*apiv1.ReplicaStatus) int32 {
+func GetTotalFailedReplicas(replicas map[apiv1.ReplicaType]apiv1.ReplicaStatus) int32 {
 	totalFailedReplicas := int32(0)
 	for _, status := range replicas {
 		totalFailedReplicas += status.Failed

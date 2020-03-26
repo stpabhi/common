@@ -7,13 +7,13 @@ require (
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
 	github.com/googleapis/gnostic v0.2.0 // indirect
 	github.com/imdario/mergo v0.3.7 // indirect
-	github.com/kubernetes-sigs/kube-batch v0.4.2
+	github.com/kubernetes-sigs/kube-batch v0.5.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/testify v1.4.0
 	gopkg.in/square/go-jose.v2 v2.3.0 // indirect
 	k8s.io/api v0.17.2
 	k8s.io/apimachinery v0.17.2
-	k8s.io/client-go v0.17.2
+	k8s.io/client-go v10.0.0+incompatible
 	k8s.io/code-generator v0.17.2
 	k8s.io/kube-openapi v0.0.0-20191107075043-30be4d16710a
 	k8s.io/kubernetes v1.17.2

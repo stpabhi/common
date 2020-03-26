@@ -31,9 +31,9 @@ import (
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
 		"github.com/kubeflow/common/pkg/apis/common/v1.JobCondition":     schema_pkg_apis_common_v1_JobCondition(ref),
+		"github.com/kubeflow/common/pkg/apis/common/v1.JobReplicaStatus": schema_pkg_apis_common_v1_JobReplicaStatus(ref),
 		"github.com/kubeflow/common/pkg/apis/common/v1.JobStatus":        schema_pkg_apis_common_v1_JobStatus(ref),
 		"github.com/kubeflow/common/pkg/apis/common/v1.ReplicaSpec":      schema_pkg_apis_common_v1_ReplicaSpec(ref),
-		"github.com/kubeflow/common/pkg/apis/common/v1.ReplicaStatus":    schema_pkg_apis_common_v1_ReplicaStatus(ref),
 		"github.com/kubeflow/common/pkg/apis/common/v1.RunPolicy":        schema_pkg_apis_common_v1_RunPolicy(ref),
 		"github.com/kubeflow/common/pkg/apis/common/v1.SchedulingPolicy": schema_pkg_apis_common_v1_SchedulingPolicy(ref),
 		"k8s.io/api/core/v1.AWSElasticBlockStoreVolumeSource":            schema_k8sio_api_core_v1_AWSElasticBlockStoreVolumeSource(ref),
@@ -352,6 +352,40 @@ func schema_pkg_apis_common_v1_JobCondition(ref common.ReferenceCallback) common
 	}
 }
 
+func schema_pkg_apis_common_v1_JobReplicaStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ReplicaStatus represents the current observed state of the replica.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"active": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The number of actively running pods.",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"succeeded": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The number of pods which reached phase Succeeded.",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"failed": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The number of pods which reached phase Failed.",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
 func schema_pkg_apis_common_v1_JobStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -380,7 +414,7 @@ func schema_pkg_apis_common_v1_JobStatus(ref common.ReferenceCallback) common.Op
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Ref: ref("github.com/kubeflow/common/pkg/apis/common/v1.ReplicaStatus"),
+										Ref: ref("github.com/kubeflow/common/pkg/apis/common/v1.JobReplicaStatus"),
 									},
 								},
 							},
@@ -409,7 +443,7 @@ func schema_pkg_apis_common_v1_JobStatus(ref common.ReferenceCallback) common.Op
 			},
 		},
 		Dependencies: []string{
-			"github.com/kubeflow/common/pkg/apis/common/v1.JobCondition", "github.com/kubeflow/common/pkg/apis/common/v1.ReplicaStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
+			"github.com/kubeflow/common/pkg/apis/common/v1.JobCondition", "github.com/kubeflow/common/pkg/apis/common/v1.JobReplicaStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
 	}
 }
 
@@ -445,40 +479,6 @@ func schema_pkg_apis_common_v1_ReplicaSpec(ref common.ReferenceCallback) common.
 		},
 		Dependencies: []string{
 			"k8s.io/api/core/v1.PodTemplateSpec"},
-	}
-}
-
-func schema_pkg_apis_common_v1_ReplicaStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ReplicaStatus represents the current observed state of the replica.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"active": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The number of actively running pods.",
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-					"succeeded": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The number of pods which reached phase Succeeded.",
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-					"failed": {
-						SchemaProps: spec.SchemaProps{
-							Description: "The number of pods which reached phase Failed.",
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-				},
-			},
-		},
 	}
 }
 

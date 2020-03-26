@@ -27,7 +27,7 @@ type JobStatus struct {
 
 	// ReplicaStatuses is map of ReplicaType and ReplicaStatus,
 	// specifies the status of each replica.
-	ReplicaStatuses map[ReplicaType]*ReplicaStatus `json:"replicaStatuses"`
+	ReplicaStatuses map[ReplicaType]ReplicaStatus `json:"replicaStatuses"`
 
 	// Represents time when the job was acknowledged by the job controller.
 	// It is not guaranteed to be set in happens-before order across separate operations.
@@ -45,6 +45,8 @@ type JobStatus struct {
 	LastReconcileTime *metav1.Time `json:"lastReconcileTime,omitempty"`
 }
 
+type ReplicaStatus *JobReplicaStatus
+
 // +k8s:openapi-gen=true
 // ReplicaType represents the type of the replica. Each operator needs to define its
 // own set of ReplicaTypes.
@@ -52,7 +54,7 @@ type ReplicaType string
 
 // +k8s:openapi-gen=true
 // ReplicaStatus represents the current observed state of the replica.
-type ReplicaStatus struct {
+type JobReplicaStatus struct {
 	// The number of actively running pods.
 	Active int32 `json:"active,omitempty"`
 
